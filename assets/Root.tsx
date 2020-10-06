@@ -10,10 +10,10 @@ import Page404 from "./components/Page404";
 const Root = () => {
   return (
     <NativeRouter>
+      <StatusBar translucent={false} />
       <View>
-        {/* Header */}
         {/* Navbar */}
-        <View>
+        <View style={styles.container}>
           <Switch>
             <Route exact path="/" render={Welcome} />
             <Route path="/profile" render={Profile} />
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingHorizontal: "5%",
     paddingTop: "5%",
+    backgroundColor: "lightblue",
   },
   footer: {
     position: "absolute",
