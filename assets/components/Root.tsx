@@ -1,11 +1,11 @@
 import React from 'react';
 import { StatusBar, View } from 'react-native';
 import { NativeRouter, Route, Switch } from 'react-router-native';
-import Profile from './components/Profile';
+import Profile from './Profile';
 import { StyleSheet } from 'react-native';
-import FooterBar from './components/FooterBar';
-import Welcome from './components/Welcome';
-import Page404 from './components/Page404';
+import FooterBar from './FooterBar';
+import Welcome from './Welcome';
+import Page404 from './Page404';
 
 const Root = () => {
     return (
@@ -15,9 +15,9 @@ const Root = () => {
                 {/* Navbar */}
                 <View style={styles.container}>
                     <Switch>
-                        <Route exact path="/" render={Welcome} />
-                        <Route path="/profile" render={Profile} />
-                        <Route path="*" render={Page404} />
+                        <Route exact path="/" component={Welcome} />
+                        <Route path="/profile" component={Profile} />
+                        <Route path="*" component={Page404} />
                     </Switch>
                 </View>
             </View>
