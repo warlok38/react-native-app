@@ -1,10 +1,30 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import { styles } from './style';
+import images from './../../images/index';
+import MyPosts from '../MyPosts';
 
-const Profile = () => {
+export interface Props {
+    profile?: any;
+    status?: string;
+}
+
+const Profile: React.FC<Props> = ({ profile, status }) => {
     return (
         <View>
-            <Text>this is profile</Text>
+            <View>
+                <View style={styles.avatar}>
+                    <Image
+                        style={styles.avatarImage}
+                        source={images.unknownUser}
+                    />
+                </View>
+                {<Text>Имя: {profile && profile.fullName}</Text>}
+                {<Text>Статус: {status ? status : '-----'}</Text>}
+            </View>
+            <View>
+                <MyPosts />
+            </View>
         </View>
     );
 };

@@ -16,7 +16,7 @@ const Root = () => {
                 <View style={styles.container}>
                     <Switch>
                         <Route exact path="/" component={Welcome} />
-                        <Route path="/profile" component={Profile} />
+                        <Route path="/profile:userId?" component={Profile} />
                         <Route path="*" component={Page404} />
                     </Switch>
                 </View>
