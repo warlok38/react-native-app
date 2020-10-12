@@ -1,0 +1,9 @@
+[{
+        "message": "hello world",
+        "likesCount": 10
+    },
+    {
+        "message": "yoyoyo",
+        "likesCount": 0
+    }
+]

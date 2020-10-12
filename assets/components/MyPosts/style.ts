@@ -8,8 +8,17 @@ export const styles = StyleSheet.create({
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
+        padding: 5,
+    },
+    button: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        width: '100%',
+        backgroundColor: 'gold',
+        textAlign: 'center',
     },
 });
+
 export const stylesPost = StyleSheet.create({
     wrapper: {
         display: 'flex',
@@ -26,5 +35,8 @@ export const stylesPost = StyleSheet.create({
     },
     text: {
         marginLeft: 10,
+    },
+    likes: {
+        marginLeft: 'auto',
     },
 });

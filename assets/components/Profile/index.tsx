@@ -2,28 +2,38 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { styles } from './style';
 import images from './../../images/index';
-import MyPosts from '../MyPosts';
+import MyPostContainer from '../MyPosts/MyPostsContainer';
+import posts from '../../mocks/posts.json';
+import { Posts } from '../../types/posts';
 
 export interface Props {
     profile?: any;
     status?: string;
+    posts?: Posts;
 }
 
 const Profile: React.FC<Props> = ({ profile, status }) => {
     return (
         <View>
-            <View>
+            <View style={styles.info}>
                 <View style={styles.avatar}>
                     <Image
                         style={styles.avatarImage}
                         source={images.unknownUser}
                     />
                 </View>
-                {<Text>Имя: {profile && profile.fullName}</Text>}
-                {<Text>Статус: {status ? status : '-----'}</Text>}
+                <View>
+                    <Text style={styles.nameTitle}>
+                        Имя: {profile && profile.fullName}
+                    </Text>
+
+                    <Text style={styles.statusTitle}>
+                        {status ? status : 'Написать статус...'}
+                    </Text>
+                </View>
             </View>
             <View>
-                <MyPosts />
+                <MyPostContainer />
             </View>
         </View>
     );

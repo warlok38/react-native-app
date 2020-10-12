@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     avatarImage: {
         width: 80,
         height: 80,
+        borderRadius: 50,
     },
     mainContainer: {
         height: '100%',
@@ -23,4 +24,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
+    info: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    nameTitle: {
+        fontSize: 20,
+    },
+    statusTitle: {
+        fontSize: 14,
+        color: "#4f4f4f"
+    }
 });
