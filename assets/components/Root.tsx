@@ -1,24 +1,46 @@
-import React from 'react';
-import { StatusBar, View } from 'react-native';
-import { NativeRouter, Route, Switch } from 'react-router-native';
+import React, { useState } from 'react';
+import { ScrollView, StatusBar, View } from 'react-native';
+import { NativeRouter, Redirect, Route, Switch } from 'react-router-native';
 import Profile from './Profile';
 import { StyleSheet } from 'react-native';
 import FooterBar from './FooterBar';
 import Welcome from './Welcome';
 import Page404 from './Page404';
+import { sleep } from '../helpers/sleep';
 
 const Root = () => {
+    const [isInitialized, setInitialazed] = useState(false);
+
+    const initialize = async () => {
+        await sleep(3000);
+        setInitialazed(true);
+    };
+
+    initialize();
+
+    if (!isInitialized) {
+        return <Welcome />;
+    }
     return (
         <NativeRouter>
             <StatusBar translucent={false} />
             <View>
                 {/* Navbar */}
                 <View style={styles.container}>
-                    <Switch>
-                        <Route exact path="/" component={Welcome} />
-                        <Route path="/profile:userId?" component={Profile} />
-                        <Route path="*" component={Page404} />
-                    </Switch>
+                    <ScrollView>
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => <Redirect to="/profile" />}
+                            />
+                            <Route
+                                path="/profile:userId?"
+                                component={Profile}
+                            />
+                            <Route path="*" component={Page404} />
+                        </Switch>
+                    </ScrollView>
                 </View>
             </View>
             <View style={styles.footer}>
