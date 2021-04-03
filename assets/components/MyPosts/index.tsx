@@ -13,11 +13,12 @@ interface Props {
 }
 interface FormProps {
     addPost: any;
+    newPostText?: string;
 }
-const AddPostForm: React.FC<FormProps> = ({ addPost }) => (
+const AddPostForm: React.FC<FormProps> = ({ addPost, newPostText }) => (
     <Formik
         initialValues={{
-            newPostText: '',
+            newPostText: newPostText,
         }}
         onSubmit={(values) => addPost(values.newPostText)}
     >
@@ -31,7 +32,7 @@ const AddPostForm: React.FC<FormProps> = ({ addPost }) => (
                 />
                 <Button
                     title="Отправить"
-                    onPress={() => formikProps.handleSubmit()}
+                    onPress={() => newPostText && formikProps.handleSubmit()}
                 />
             </>
         )}

@@ -7,6 +7,8 @@ import FooterBar from './FooterBar';
 import Welcome from './Welcome';
 import Page404 from './Page404';
 import { sleep } from '../helpers/sleep';
+import { ProfileContainer } from './Profile/ProfileContainer';
+import { UsersContainer } from './Users/UsersContainer';
 
 const Root = () => {
     const [isInitialized, setInitialazed] = useState(false);
@@ -36,8 +38,9 @@ const Root = () => {
                             />
                             <Route
                                 path="/profile:userId?"
-                                component={Profile}
+                                component={ProfileContainer}
                             />
+                            <Route path="/users" component={UsersContainer} />
                             <Route path="*" component={Page404} />
                         </Switch>
                     </ScrollView>

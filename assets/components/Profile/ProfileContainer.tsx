@@ -1,16 +1,30 @@
-// import React, { Component } from 'react';
-// import Profile from './index';
-// import { connect } from 'react-redux';
-// import {
-//     getUserProfile,
-//     getStatus,
-//     // updateStatus,
-//     // savePhoto,
-//     // saveProfile,
-// } from '../../store/profile-reducer';
+import React, { Component, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProfileAPI } from '../../api/profile-api';
+import { AppStateType } from '../../store/redux-store';
+import Profile from './index';
+import { connect } from 'react-redux';
+import {
+    getUserProfile,
+    getStatus,
+    // updateStatus,
+    // savePhoto,
+    // saveProfile,
+} from '../../store/profile-reducer';
 // import { withRouter } from 'react-router-dom';
-// import { compose } from 'redux';
+// import { compose, Dispatch } from 'redux';
+export const ProfileContainer = () => {
+    const dispatch = useDispatch();
+    const { profile, status } = useSelector(
+        (state: AppStateType) => state.profilePage
+    );
+    useEffect(() => {
+        dispatch(getUserProfile(11376));
+        dispatch(getStatus(11376));
+    }, []);
 
+    return <Profile profile={profile} status={status} />;
+};
 // export interface Props {
 //     isOwner?: any;
 //     profile?: any;

@@ -1,4 +1,4 @@
-const images = {
+const images: any = {
     unknownUser: require('./unknownUser.png'),
 };
 
