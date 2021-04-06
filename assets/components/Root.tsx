@@ -37,7 +37,7 @@ const Root = () => {
                                 render={() => <Redirect to="/profile" />}
                             />
                             <Route
-                                path="/profile:userId?"
+                                path="/profile/:userId?"
                                 component={ProfileContainer}
                             />
                             <Route path="/users" component={UsersContainer} />
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         height: '100%',
         paddingHorizontal: '5%',
         paddingTop: '5%',
+        paddingBottom: 35,
         backgroundColor: 'lightblue',
     },
     footer: {

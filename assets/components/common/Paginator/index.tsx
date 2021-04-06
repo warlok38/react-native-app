@@ -29,14 +29,15 @@ const Paginator: React.FC<Props> = ({
 
     return (
         <View style={styles.paginator}>
-            {portionNumber > 1 && (
+            {
                 <Button
+                    disabled={!(portionNumber > 1)}
                     title="PREV"
                     onPress={() => {
                         setPortionNumber(portionNumber - 1);
                     }}
                 />
-            )}
+            }
 
             {pages
                 .filter(
@@ -59,14 +60,15 @@ const Paginator: React.FC<Props> = ({
                         </Text>
                     );
                 })}
-            {portionCount > portionNumber && (
+            {
                 <Button
+                    disabled={!(portionCount > portionNumber)}
                     title="NEXT"
                     onPress={() => {
                         setPortionNumber(portionNumber + 1);
                     }}
                 />
-            )}
+            }
         </View>
     );
 };

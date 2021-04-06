@@ -20,48 +20,48 @@ const User: React.FC<PropsType> = ({
 }) => {
     return (
         <View style={styles.wrapper}>
-            <View>
+            <View style={styles.row}>
                 <View>
                     <Link to={'/profile/' + user.id}>
                         <Image
                             style={styles.userPhoto}
                             source={
                                 user.photos.small != null
-                                    ? user.photos.small
+                                    ? { uri: user.photos.small }
                                     : images.unknownUser
                             }
                         />
                     </Link>
                 </View>
                 <View>
-                    {user.followed ? (
-                        <Button
-                            title="unfollow"
-                            disabled={followingInProgress.some(
-                                (id) => id === user.id
-                            )}
-                            onPress={() => {
-                                unfollow(user.id);
-                            }}
-                        />
-                    ) : (
-                        <Button
-                            title="follow"
-                            disabled={followingInProgress.some(
-                                (id) => id === user.id
-                            )}
-                            onPress={() => {
-                                follow(user.id);
-                            }}
-                        />
-                    )}
+                    <View>
+                        <Text>{user.name}</Text>
+                        <Text>{user.status}</Text>
+                    </View>
                 </View>
             </View>
-            <View>
-                <View>
-                    <Text>{user.name}</Text>
-                    <Text>{user.status}</Text>
-                </View>
+            <View style={styles.buttonFriend}>
+                {user.followed ? (
+                    <Button
+                        title="unfollow"
+                        disabled={followingInProgress.some(
+                            (id) => id === user.id
+                        )}
+                        onPress={() => {
+                            unfollow(user.id);
+                        }}
+                    />
+                ) : (
+                    <Button
+                        title="follow"
+                        disabled={followingInProgress.some(
+                            (id) => id === user.id
+                        )}
+                        onPress={() => {
+                            follow(user.id);
+                        }}
+                    />
+                )}
             </View>
         </View>
     );

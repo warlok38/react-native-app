@@ -3,6 +3,19 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    row: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    buttonFriend: {
+        marginLeft: 'auto',
+        height: 'auto',
+        backgroundColor: '#fff',
     },
     userPhoto: {
         width: 60,

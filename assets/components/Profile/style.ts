@@ -24,6 +24,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
+    title: {
+        marginLeft: 10,
+    },
     info: {
         display: 'flex',
         flexDirection: 'row',
@@ -33,6 +36,21 @@ export const styles = StyleSheet.create({
     },
     statusTitle: {
         fontSize: 14,
-        color: "#4f4f4f"
-    }
+        color: '#4f4f4f',
+    },
+    loading: {
+        zIndex: 999,
+        position: 'absolute',
+        marginVertical: '50%',
+        marginHorizontal: '50%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    toggleButton: {
+        backgroundColor: 'transparent',
+        width: 'auto',
+    },
+    contacts: {
+        paddingLeft: 20,
+    },
 });
