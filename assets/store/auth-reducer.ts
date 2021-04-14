@@ -9,7 +9,7 @@ type ActionsType = InferActionsTypes<typeof actions>;
 type ThunkType = BaseThunkType<ActionsType | FormAction>;
 
 let initialState = {
-    userId: null as number | null,
+    userId: 16492 as number | null, //TODO мой id второй акк. пофиксится, когда сделаю login
     email: null as string | null,
     login: null as string | null,
     isAuth: false,

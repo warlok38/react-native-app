@@ -31,8 +31,11 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
+    about: {
+        fontSize: 16,
+    },
     nameTitle: {
-        fontSize: 20,
+        fontSize: 21,
     },
     statusTitle: {
         fontSize: 14,
@@ -47,8 +50,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     toggleButton: {
-        backgroundColor: 'transparent',
-        width: 'auto',
+        display: 'flex',
+        marginRight: 'auto',
+        paddingVertical: 5,
+    },
+    toggleButtonText: {
+        fontWeight: 'bold',
+        fontSize: 16,
     },
     contacts: {
         paddingLeft: 20,

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Button, Image, Text, View } from 'react-native';
+import {
+    ActivityIndicator,
+    Image,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import { styles } from './style';
 import images from './../../images/index';
 import MyPostContainer from '../MyPosts/MyPostsContainer';
@@ -48,15 +54,19 @@ const Profile: React.FC<Props> = ({ profile, status }) => {
                 </View>
             </View>
             <View>
-                <Text>
+                <Text style={styles.about}>
                     looking for a job: {profile.lookingForAJob ? 'Yes' : 'No'}
                 </Text>
-                <Text>About me: {profile.aboutMe}</Text>
-                <View style={styles.toggleButton}>
-                    <Button
-                        title="contacts"
+                <Text style={styles.about}>About me: {profile.aboutMe}</Text>
+                <View>
+                    <TouchableOpacity
+                        style={styles.toggleButton}
                         onPress={() => toggleShowContacts(!showContacts)}
-                    />
+                    >
+                        <Text style={styles.toggleButtonText}>
+                            Show contacts {`->`}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={!showContacts && { display: 'none' }}>
                     {Object.keys(profile.contacts).map((key) => {
@@ -90,7 +100,7 @@ const Contacts: React.FC<ContactsPropsType> = ({
 }) => {
     return (
         <View style={styles.contacts}>
-            <Text>
+            <Text style={styles.about}>
                 {contactTitle}: {contactValue}
             </Text>
         </View>

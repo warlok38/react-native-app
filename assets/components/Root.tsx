@@ -7,8 +7,14 @@ import FooterBar from './FooterBar';
 import Welcome from './Welcome';
 import Page404 from './Page404';
 import { sleep } from '../helpers/sleep';
-import { ProfileContainer } from './Profile/ProfileContainer';
 import { UsersContainer } from './Users/UsersContainer';
+import { withSuspense } from './hoc/withSuspense';
+
+const ProfileContainer = React.lazy(() => import('./Profile/ProfileContainer'));
+const ChatPage = React.lazy(() => import('./Chat/ChatPage'));
+
+const SuspendedProfile = withSuspense(ProfileContainer);
+const SuspendedChatPage = withSuspense(ChatPage);
 
 const Root = () => {
     const [isInitialized, setInitialazed] = useState(false);
@@ -38,10 +44,19 @@ const Root = () => {
                             />
                             <Route
                                 path="/profile/:userId?"
-                                component={ProfileContainer}
+                                render={() => <SuspendedProfile />}
                             />
-                            <Route path="/users" component={UsersContainer} />
-                            <Route path="*" component={Page404} />
+                            <Route
+                                path="/users"
+                                render={() => (
+                                    <UsersContainer pageTitle="users" />
+                                )}
+                            />
+                            <Route
+                                path="/chat"
+                                render={() => <SuspendedChatPage />}
+                            />
+                            <Route path="*" render={() => <Page404 />} />
                         </Switch>
                     </ScrollView>
                 </View>

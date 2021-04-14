@@ -33,11 +33,9 @@ const User: React.FC<PropsType> = ({
                         />
                     </Link>
                 </View>
-                <View>
-                    <View>
-                        <Text>{user.name}</Text>
-                        <Text>{user.status}</Text>
-                    </View>
+                <View style={styles.userLabel}>
+                    <Text style={styles.userName}>{user.name}</Text>
+                    <Text style={styles.userStatus}>{user.status}</Text>
                 </View>
             </View>
             <View style={styles.buttonFriend}>

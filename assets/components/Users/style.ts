@@ -20,6 +20,16 @@ export const styles = StyleSheet.create({
     userPhoto: {
         width: 60,
         height: 60,
+        borderRadius: 50,
+    },
+    userLabel: {
+        paddingLeft: 10,
+    },
+    userName: {
+        fontSize: 16,
+    },
+    userStatus: {
+        color: '#797979',
     },
     loading: {
         zIndex: 999,

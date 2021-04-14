@@ -6,6 +6,7 @@ import Post from './Post';
 import { styles } from './style';
 import { MyTextInput } from '../common/FormControls';
 import { Formik } from 'formik';
+import { PostType } from '../../types/types';
 
 interface Props {
     posts?: Posts;
@@ -15,6 +16,13 @@ interface FormProps {
     addPost: any;
     newPostText?: string;
 }
+export type MapPropsType = {
+    posts: Array<PostType>;
+};
+export type DispatchPropsType = {
+    addPost: (newPostText: string) => void;
+};
+
 const AddPostForm: React.FC<FormProps> = ({ addPost, newPostText }) => (
     <Formik
         initialValues={{

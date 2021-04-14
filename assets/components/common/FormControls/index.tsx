@@ -7,6 +7,7 @@ export interface Props {
     meta?: any;
     child?: any;
 }
+export type GetStringKeys<T> = Extract<keyof T, string>;
 export const MyTextInput: React.FC<Props> = ({
     input,
     meta,
