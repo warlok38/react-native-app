@@ -2,7 +2,7 @@ import { FormAction } from 'redux-form';
 import { BaseThunkType, InferActionsTypes } from './redux-store';
 import { chatAPI, ChatMessageApiType, StatusType } from '../api/chat-api';
 import { Dispatch } from 'redux';
-import { v1 } from 'uuid';
+import uuid from 'react-native-uuid';
 
 export type InitialStateType = typeof initialState;
 type ActionsType = InferActionsTypes<typeof actions>;
@@ -24,7 +24,10 @@ const chatReducer = (
                 ...state,
                 messages: [
                     ...state.messages,
-                    ...action.payload.messages.map((m) => ({ ...m, id: v1() })),
+                    ...action.payload.messages.map((m) => ({
+                        ...m,
+                        id: uuid.v4() as string,
+                    })),
                 ].filter((m, index, array) => index >= array.length - 100),
             };
         case 'SN/chat/STATUS_CHANGED':

@@ -82,9 +82,9 @@ const Profile: React.FC<Props> = ({ profile, status }) => {
                     })}
                 </View>
             </View>
-            <View>
+            {/* <View>
                 <MyPostContainer />
-            </View>
+            </View> */}
         </View>
     );
 };

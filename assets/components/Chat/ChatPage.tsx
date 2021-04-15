@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import {
     Image,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
     ScrollView,
     Text,
     TextInput,
@@ -9,12 +11,14 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChatMessageApiType } from '../../api/chat-api';
+import images from '../../images';
 import {
     sendMessage,
     startMessagesListening,
     stopMessagesListening,
 } from '../../store/chat-reducer';
 import { AppStateType } from '../../store/redux-store';
+import { styles } from './style';
 
 const ChatPage: React.FC = () => {
     return <Chat />;
@@ -52,12 +56,15 @@ const Messages: React.FC<{}> = () => {
     const messagesAncorRef = useRef<ScrollView>(null);
     const [isAutoScroll, setIsAutoScroll] = useState(true);
 
-    const scrollHandler = (e: React.BaseSyntheticEvent) => {
-        const element = e.currentTarget;
+    const scrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const element = e.nativeEvent;
+
         if (
             Math.abs(
-                element.scrollHeight - element.scrollTop - element.clientHeight
-            ) < 50
+                element.contentSize.height -
+                    element.contentOffset.y -
+                    element.layoutMeasurement.height
+            ) < 30
         ) {
             !isAutoScroll && setIsAutoScroll(true);
         } else {
@@ -66,21 +73,22 @@ const Messages: React.FC<{}> = () => {
     };
 
     useEffect(() => {
-        // if (isAutoScroll) {
-        //     messagesAncorRef.current?.scrollTo();
-        // }
+        if (isAutoScroll) {
+            messagesAncorRef.current?.scrollToEnd({ animated: true });
+        }
     }, [messages]);
 
     return (
         <ScrollView
-            // ref={messagesAncorRef}
+            ref={messagesAncorRef}
             style={{
-                height: 400,
+                height: 500,
+                paddingLeft: 5,
                 overflow: 'scroll',
                 borderColor: '#797979',
                 borderWidth: 2,
             }}
-            // onScroll={scrollHandler}
+            onScroll={scrollHandler}
         >
             {messages.map((message, index) => (
                 <Message key={message.id} message={message} />
@@ -91,22 +99,40 @@ const Messages: React.FC<{}> = () => {
 
 const Message: React.FC<{ message: ChatMessageApiType }> = React.memo(
     ({ message }) => {
-        console.log(message ? '+' : '-');
         return (
-            <View style={{ backgroundColor: '#fff' }}>
-                <Image
-                    width={30}
-                    height={30}
-                    source={{
-                        uri: message.photo
-                            ? message.photo
-                            : 'https://via.placeholder.com/30',
+            <View
+                style={{
+                    paddingTop: 10,
+                    paddingBottom: 5,
+                }}
+            >
+                <View
+                    style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        flexDirection: 'row',
                     }}
-                />
-                <Text>{message.userName}</Text>
-                <br />
+                >
+                    <View>
+                        <Image
+                            style={styles.userPhoto}
+                            source={
+                                message.photo
+                                    ? { uri: message.photo }
+                                    : images.unknownUser
+                            }
+                        />
+                    </View>
+                    <Text
+                        style={{
+                            paddingLeft: 5,
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        {message.userName}
+                    </Text>
+                </View>
                 <Text>{message.message}</Text>
-                <hr />
             </View>
         );
     }
@@ -138,18 +164,31 @@ const AddMessageForm: React.FC<{}> = () => {
             </View>
             <View>
                 <TouchableOpacity
+                    disabled={status !== 'ready'}
                     onPress={sendMessageHandler}
-                    style={{
-                        marginTop: 10,
-                        display: 'flex',
-                        alignItems: 'center',
-                        padding: 10,
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                    }}
+                    style={
+                        status !== 'ready'
+                            ? {
+                                  marginTop: 10,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  padding: 10,
+                                  backgroundColor: '#bebebe',
+                                  width: '100%',
+                                  borderRadius: 10,
+                              }
+                            : {
+                                  marginTop: 10,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  padding: 10,
+                                  backgroundColor: '#fff',
+                                  width: '100%',
+                                  borderRadius: 10,
+                              }
+                    }
                 >
-                    <Text>send</Text>
+                    <Text>{status !== 'ready' ? 'reconnect...' : 'send'}</Text>
                 </TouchableOpacity>
             </View>
         </View>

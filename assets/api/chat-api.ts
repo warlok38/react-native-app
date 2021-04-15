@@ -8,10 +8,9 @@ type EventsNamesType = 'messages-received' | 'status-changed';
 
 const closeHandler = () => {
     notifySubscribersAboutStatus('pending');
-    setTimeout(createChannel, 3000);
+    setTimeout(createChannel, 5000);
 };
 const messageHandler = (e: MessageEvent) => {
-    console.log('messageHandler');
     const newMessages = JSON.parse(e.data);
     subscribers['messages-received'].forEach((s) => s(newMessages));
 };
@@ -49,14 +48,12 @@ function createChannel() {
 export const chatAPI = {
     start() {
         createChannel();
-        console.log('channel created');
     },
     stop() {
         subscribers['messages-received'] = [];
         subscribers['status-changed'] = [];
         cleanUp();
         ws?.close();
-        console.log('channel closed');
     },
     subscribe(
         eventName: EventsNamesType,
