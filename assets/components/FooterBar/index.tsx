@@ -1,4 +1,4 @@
-import { Link } from 'react-router-native';
+import { Link, useHistory } from 'react-router-native';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -12,11 +12,13 @@ import {
 
 const FooterBar = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const isAuth = useSelector(selectIsAuth);
     // const login = useSelector(selectCurrentUserLogin);
 
-    const logoutCallBack = () => {
-        dispatch(logout());
+    const logoutCallBack = async () => {
+        await dispatch(logout());
+        history.push('/login');
     };
 
     return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, View } from 'react-native';
 import { NativeRouter, Redirect, Route, Switch } from 'react-router-native';
+
 import Profile from './Profile';
 import { StyleSheet } from 'react-native';
 import FooterBar from './FooterBar';
@@ -10,7 +11,7 @@ import { sleep } from '../helpers/sleep';
 import { UsersContainer } from './Users/UsersContainer';
 import { withSuspense } from './hoc/withSuspense';
 import { Login } from './Login';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../store/redux-store';
 import { initializeApp } from '../store/app-reducer';
 
@@ -20,18 +21,18 @@ const ChatPage = React.lazy(() => import('./Chat/ChatPage'));
 const SuspendedProfile = withSuspense(ProfileContainer);
 const SuspendedChatPage = withSuspense(ChatPage);
 
-const Root = () => {
+export const Root = () => {
     const initialized = useSelector(
         (state: AppStateType) => state.app.initialized
     );
-    console.log('initialized: ', initialized);
-    // if (!initialized) {
-    //     return <Welcome />;
-    // }
+    const dispatch = useDispatch();
     useEffect(() => {
-        initializeApp();
+        dispatch(initializeApp());
     }, []);
 
+    if (!initialized) {
+        return <Welcome />;
+    }
     return (
         <NativeRouter>
             <StatusBar translucent={false} />
@@ -71,8 +72,6 @@ const Root = () => {
         </NativeRouter>
     );
 };
-
-export default Root;
 
 const styles = StyleSheet.create({
     container: {

@@ -12,6 +12,7 @@ import { RouteComponentProps, withRouter } from 'react-router-native';
 import { compose } from 'redux';
 import { AppStateType } from '../../store/redux-store';
 import { ProfileType } from '../../types/types';
+import { ActivityIndicator, View } from 'react-native';
 
 type MapPropsType = ReturnType<typeof mapStateToProps>;
 type DispatchPropsType = {
@@ -56,7 +57,22 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
-        return (
+        return !this.props.profile ? (
+            <View
+                style={{
+                    marginVertical: '50%',
+                    marginHorizontal: '50%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <ActivityIndicator
+                    color="white"
+                    size={50}
+                    style={{ zIndex: 999 }}
+                />
+            </View>
+        ) : (
             <Profile
                 {...this.props}
                 isOwner={!this.props.match.params.userId}

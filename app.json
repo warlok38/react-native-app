@@ -21,6 +21,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.warlok38.social",
+      "versionCode": 1
     }
   }
 }

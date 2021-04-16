@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Switch as NativeSwitch,
+    Image,
 } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -44,6 +45,7 @@ export const LoginForm: React.FC<any> = ({
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string().required('Required'),
         rememberMe: Yup.boolean(),
+        captcha: captchaUrl && Yup.string().required('Required'),
     });
     const {
         handleChange,
@@ -54,7 +56,12 @@ export const LoginForm: React.FC<any> = ({
         touched,
     } = useFormik({
         validationSchema: LoginSchema,
-        initialValues: { email: '', password: '', rememberMe: isSwitchEnabled },
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: isSwitchEnabled,
+            captcha: '',
+        },
         onSubmit: (values) => handleSubmit(values),
     });
     return (
@@ -64,6 +71,7 @@ export const LoginForm: React.FC<any> = ({
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
+                paddingHorizontal: 32,
             }}
         >
             <Text style={{ color: '#223e4b', fontSize: 20, marginBottom: 16 }}>
@@ -71,8 +79,6 @@ export const LoginForm: React.FC<any> = ({
             </Text>
             <View
                 style={{
-                    paddingHorizontal: 32,
-                    marginBottom: 16,
                     width: '100%',
                 }}
             >
@@ -95,9 +101,8 @@ export const LoginForm: React.FC<any> = ({
             </View>
             <View
                 style={{
-                    paddingHorizontal: 32,
-                    marginBottom: 16,
                     width: '100%',
+                    marginTop: 16,
                 }}
             >
                 <TextInput
@@ -117,6 +122,35 @@ export const LoginForm: React.FC<any> = ({
                     onSubmitEditing={() => onSubmitHandler()}
                 />
             </View>
+            {captchaUrl && (
+                <View
+                    style={{
+                        flex: 1,
+                        width: '100%',
+                        marginTop: 16,
+                    }}
+                >
+                    <Image
+                        style={{
+                            width: '100%',
+                            resizeMode: 'contain',
+                            height: 50,
+                            marginBottom: 16,
+                        }}
+                        source={{ uri: captchaUrl }}
+                    />
+                    <TextInput
+                        placeholder="Enter capthca"
+                        returnKeyType="go"
+                        keyboardAppearance="dark"
+                        onChangeText={handleChange('captcha')}
+                        onBlur={handleBlur('captcha')}
+                        error={errors.captcha}
+                        touched={touched.captcha}
+                        onSubmitEditing={() => onSubmitHandler()}
+                    />
+                </View>
+            )}
             <View
                 style={{
                     display: 'flex',

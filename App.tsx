@@ -3,12 +3,18 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import store from './assets/store/redux-store';
 import { Provider } from 'react-redux';
-import Root from './assets/components/Root';
+import { Root } from './assets/components/Root';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
+
+const history = createMemoryHistory();
 
 export default function App() {
     return (
         <Provider store={store}>
-            <Root />
+            <Router history={history}>
+                <Root />
+            </Router>
         </Provider>
     );
 }

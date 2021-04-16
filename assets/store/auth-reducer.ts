@@ -54,7 +54,6 @@ export const actions = {
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
     const meData = await authAPI.me();
-
     if (meData.resultCode === ResultCodesEnum.Success) {
         const { id, email, login } = meData.data;
         dispatch(actions.setAuthUserData(id, email, login, true));
