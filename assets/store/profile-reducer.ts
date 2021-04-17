@@ -103,6 +103,7 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         }
     } catch (error) {
         //error handler
+        console.log('error: updateStatus was failed');
     }
 };
 export const savePhoto = (file: File): ThunkType => async (dispatch) => {

@@ -10,17 +10,18 @@ import { styles } from './style';
 import images from './../../images/index';
 import MyPostContainer from '../MyPosts/MyPostsContainer';
 import { ContactsType, ProfileType } from '../../types/types';
+import Status from './Status';
 
-export interface Props {
+type PropsType = {
     profile: ProfileType | null;
     status: string;
-    updateStatus?: (status: string) => void;
-    isOwner?: boolean;
-    savePhoto?: (file: File) => void;
-    saveProfile?: (profile: ProfileType) => Promise<any>;
-}
+    updateStatus: (status: string) => void;
+    isOwner: boolean;
+    savePhoto: (file: File) => void;
+    saveProfile: (profile: ProfileType) => Promise<any>;
+};
 
-const Profile: React.FC<Props> = ({ profile, status }) => {
+const Profile: React.FC<PropsType> = ({ profile, status, updateStatus }) => {
     const [showContacts, toggleShowContacts] = useState(false);
     if (!profile) {
         return (
@@ -48,9 +49,7 @@ const Profile: React.FC<Props> = ({ profile, status }) => {
                 </View>
                 <View style={styles.title}>
                     <Text style={styles.nameTitle}>{profile.fullName}</Text>
-                    <Text style={styles.statusTitle}>
-                        {status ? status : 'Написать статус...'}
-                    </Text>
+                    <Status status={status} updateStatus={updateStatus} />
                 </View>
             </View>
             <View>

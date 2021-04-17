@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
     },
     title: {
         marginLeft: 10,
+        flex: 1,
     },
     info: {
         display: 'flex',
@@ -37,9 +38,24 @@ export const styles = StyleSheet.create({
     nameTitle: {
         fontSize: 21,
     },
+    status: {},
+    statusEdit: {
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: '#797979',
+        backgroundColor: '#fff',
+    },
     statusTitle: {
+        overflow: 'hidden',
         fontSize: 14,
+    },
+    statusHasTitle: {
         color: '#4f4f4f',
+    },
+    statusHasNoTitle: {
+        color: 'blue',
     },
     loading: {
         zIndex: 999,
