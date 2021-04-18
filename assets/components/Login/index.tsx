@@ -5,7 +5,7 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Switch as NativeSwitch,
+    Switch,
     Image,
 } from 'react-native';
 import { useFormik } from 'formik';
@@ -15,6 +15,8 @@ import { login } from '../../store/auth-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../store/redux-store';
 import { Redirect } from 'react-router';
+import { icons } from '../icons';
+import { reduxForm } from 'redux-form';
 
 export const Login: React.FC = () => {
     const captchaUrl = useSelector(
@@ -31,7 +33,7 @@ export const Login: React.FC = () => {
         return <Redirect to={'/profile'} />;
     }
 
-    return <LoginForm handleSubmit={onSubmit} captchaUrl={captchaUrl} />;
+    return <LoginReduxForm handleSubmit={onSubmit} captchaUrl={captchaUrl} />;
 };
 
 export const LoginForm: React.FC<any> = ({
@@ -40,7 +42,12 @@ export const LoginForm: React.FC<any> = ({
     captchaUrl,
 }) => {
     const password = useRef(null);
-    const [isSwitchEnabled, setIsSwitchEnabled] = useState(true);
+    const [isSwitchEnabled, toggleSwitch] = useState(false);
+    const swithChangeHandler = (name: string, value: boolean) => {
+        toggleSwitch(!value);
+        setFieldValue(name, !value);
+    };
+
     const LoginSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string().required('Required'),
@@ -49,6 +56,7 @@ export const LoginForm: React.FC<any> = ({
     });
     const {
         handleChange,
+        setFieldValue,
         handleSubmit: onSubmitHandler,
         handleBlur,
         values,
@@ -84,6 +92,7 @@ export const LoginForm: React.FC<any> = ({
             >
                 <TextInput
                     icon="mail"
+                    iconError={icons.Error}
                     placeholder="Enter your email"
                     autoCapitalize="none"
                     autoCompleteType="email"
@@ -107,6 +116,7 @@ export const LoginForm: React.FC<any> = ({
             >
                 <TextInput
                     ref={password}
+                    iconError={icons.Error}
                     icon="key"
                     placeholder="Enter your password"
                     secureTextEntry
@@ -140,6 +150,7 @@ export const LoginForm: React.FC<any> = ({
                         source={{ uri: captchaUrl }}
                     />
                     <TextInput
+                        iconError={icons.Error}
                         placeholder="Enter capthca"
                         returnKeyType="go"
                         keyboardAppearance="dark"
@@ -160,18 +171,25 @@ export const LoginForm: React.FC<any> = ({
             >
                 <Text>Remember me</Text>
                 <Switch
-                    onBlur={handleBlur('rememberMe')}
-                    error={errors.rememberMe}
-                    touched={touched.rememberMe}
-                    onChange={handleChange('rememberMe')}
-                    isEnabled={isSwitchEnabled}
-                    setIsEnabled={setIsSwitchEnabled}
+                    onValueChange={() =>
+                        swithChangeHandler('rememberMe', isSwitchEnabled)
+                    }
+                    value={isSwitchEnabled}
                 />
             </View>
+            {error && (
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: '#FF5A5F' }}>{error}</Text>
+                </View>
+            )}
             <Button label="Login" onPress={onSubmitHandler} />
         </View>
     );
 };
+//@ts-ignore
+const LoginReduxForm: React.FC<any> = reduxForm({
+    form: 'login',
+})(LoginForm);
 
 const Button: React.FC<{ label: string; onPress: () => void }> = ({
     label,
@@ -185,7 +203,7 @@ const Button: React.FC<{ label: string; onPress: () => void }> = ({
                 width: 245,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#e94832',
+                backgroundColor: '#fff',
             }}
             activeOpacity={0.7}
             onPress={onPress}
@@ -193,7 +211,7 @@ const Button: React.FC<{ label: string; onPress: () => void }> = ({
             <Text
                 style={{
                     fontSize: 18,
-                    color: 'white',
+                    color: '#223e4b',
                     textTransform: 'uppercase',
                 }}
             >
@@ -204,7 +222,7 @@ const Button: React.FC<{ label: string; onPress: () => void }> = ({
 };
 
 const TextInput: React.FC<any> = forwardRef(
-    ({ icon, error, touched, ...otherProps }, ref) => {
+    ({ icon, error, iconError, touched, ...otherProps }, ref) => {
         const validationColor = !touched
             ? '#223e4b'
             : error
@@ -234,37 +252,20 @@ const TextInput: React.FC<any> = forwardRef(
                         {...otherProps}
                     />
                 </View>
+                {error && (
+                    <View
+                        style={{
+                            width: 20,
+                            height: 20,
+                        }}
+                    >
+                        {iconError}
+                    </View>
+                )}
             </View>
         );
     }
 );
-
-const Switch: React.FC<any> = ({
-    isEnabled,
-    setIsEnabled,
-    onChange,
-    ...otherProps
-}) => {
-    const toggleSwitch = () => {
-        setIsEnabled((previousState: boolean) => !previousState);
-    };
-    const onChangeHandler = () => {
-        toggleSwitch();
-    };
-
-    return (
-        <View style={styles.container}>
-            <NativeSwitch
-                trackColor={{ false: '#767577', true: '#beebc7' }}
-                thumbColor={isEnabled ? '#7acc8c' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={onChangeHandler}
-                value={isEnabled}
-                {...otherProps}
-            />
-        </View>
-    );
-};
 
 const styles = StyleSheet.create({
     container: {
