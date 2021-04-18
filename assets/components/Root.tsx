@@ -39,7 +39,7 @@ export const Root = () => {
             <View>
                 {/* Navbar */}
                 <View style={styles.container}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <Switch>
                             <Route
                                 exact

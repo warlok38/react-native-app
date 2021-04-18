@@ -217,6 +217,7 @@ const TextInput: React.FC<any> = forwardRef(
             <View
                 style={{
                     flex: 1,
+                    paddingHorizontal: 5,
                     flexDirection: 'row',
                     alignItems: 'center',
                     backgroundColor: '#fff',

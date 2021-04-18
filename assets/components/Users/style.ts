@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
     buttonFriend: {
         marginLeft: 'auto',
         height: 'auto',
-        backgroundColor: '#fff',
     },
     userPhoto: {
         width: 60,

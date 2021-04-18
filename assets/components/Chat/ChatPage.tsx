@@ -80,6 +80,7 @@ const Messages: React.FC<{}> = () => {
 
     return (
         <ScrollView
+            showsVerticalScrollIndicator={false}
             ref={messagesAncorRef}
             style={{
                 height: 500,
@@ -87,6 +88,7 @@ const Messages: React.FC<{}> = () => {
                 overflow: 'scroll',
                 borderColor: '#797979',
                 borderWidth: 2,
+                borderRadius: 10,
             }}
             onScroll={scrollHandler}
         >
@@ -153,7 +155,15 @@ const AddMessageForm: React.FC<{}> = () => {
 
     return (
         <View style={{ marginTop: 10 }}>
-            <View style={{ borderColor: '#797979', borderWidth: 2 }}>
+            <View
+                style={{
+                    paddingHorizontal: 10,
+                    borderColor: '#797979',
+                    borderWidth: 2,
+                    borderRadius: 10,
+                    backgroundColor: '#fff',
+                }}
+            >
                 <TextInput
                     placeholder="Введите сообщение..."
                     multiline
@@ -188,7 +198,9 @@ const AddMessageForm: React.FC<{}> = () => {
                               }
                     }
                 >
-                    <Text>{status !== 'ready' ? 'reconnect...' : 'send'}</Text>
+                    <Text style={{ textTransform: 'uppercase' }}>
+                        {status !== 'ready' ? 'Соединение...' : 'Отправить'}
+                    </Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -3,7 +3,8 @@ import images from './../../images';
 import { styles } from './style';
 import { Link } from 'react-router-native';
 import { UserType } from '../../types/types';
-import { Button, Image, Text, View } from 'react-native';
+import { Button, Image, Text, View, TouchableOpacity } from 'react-native';
+import { icons } from '../icons';
 
 type PropsType = {
     user: UserType;
@@ -40,25 +41,37 @@ const User: React.FC<PropsType> = ({
             </View>
             <View style={styles.buttonFriend}>
                 {user.followed ? (
-                    <Button
-                        title="unfollow"
+                    <TouchableOpacity
+                        style={{
+                            paddingHorizontal: 10,
+                        }}
                         disabled={followingInProgress.some(
                             (id) => id === user.id
                         )}
                         onPress={() => {
                             unfollow(user.id);
                         }}
-                    />
+                    >
+                        <View style={{ width: 30, height: 30 }}>
+                            {icons.userRemove}
+                        </View>
+                    </TouchableOpacity>
                 ) : (
-                    <Button
-                        title="follow"
+                    <TouchableOpacity
+                        style={{
+                            paddingHorizontal: 10,
+                        }}
                         disabled={followingInProgress.some(
                             (id) => id === user.id
                         )}
                         onPress={() => {
                             follow(user.id);
                         }}
-                    />
+                    >
+                        <View style={{ width: 30, height: 30 }}>
+                            {icons.userAdd}
+                        </View>
+                    </TouchableOpacity>
                 )}
             </View>
         </View>
