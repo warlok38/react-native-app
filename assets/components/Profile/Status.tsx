@@ -4,6 +4,7 @@ import { styles } from './style';
 
 type PropsType = {
     status: string;
+    isOwner: boolean;
     updateStatus: (status: string) => void;
 };
 
@@ -30,7 +31,9 @@ const ProfileStatus: React.FC<PropsType> = (props) => {
         <View>
             {!editMode && (
                 <View style={styles.status}>
-                    <TouchableOpacity onLongPress={activateMode}>
+                    <TouchableOpacity
+                        onLongPress={props.isOwner ? activateMode : () => {}}
+                    >
                         <Text
                             numberOfLines={2}
                             ellipsizeMode="tail"
@@ -41,7 +44,11 @@ const ProfileStatus: React.FC<PropsType> = (props) => {
                                 styles.statusTitle,
                             ]}
                         >
-                            {props.status ? props.status : 'Написать статус...'}
+                            {props.status
+                                ? props.status
+                                : props.isOwner
+                                ? 'Написать статус...'
+                                : ''}
                         </Text>
                     </TouchableOpacity>
                 </View>

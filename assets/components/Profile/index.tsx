@@ -11,6 +11,8 @@ import images from './../../images/index';
 import MyPostContainer from '../MyPosts/MyPostsContainer';
 import { ContactsType, ProfileType } from '../../types/types';
 import Status from './Status';
+import ProfileData from './ProfileData';
+import { ProfileDataForm } from './ProfileDataForm';
 
 type PropsType = {
     profile: ProfileType | null;
@@ -21,8 +23,23 @@ type PropsType = {
     saveProfile: (profile: ProfileType) => Promise<any>;
 };
 
-const Profile: React.FC<PropsType> = ({ profile, status, updateStatus }) => {
-    const [showContacts, toggleShowContacts] = useState(false);
+const Profile: React.FC<PropsType> = ({
+    profile,
+    status,
+    isOwner,
+    updateStatus,
+    saveProfile,
+}) => {
+    const [editMode, setEditMode] = useState(false);
+    const onSubmit = (formData: ProfileType) => {
+        saveProfile(formData).then(() => {
+            setEditMode(false);
+        });
+    };
+    const onCancel = () => {
+        setEditMode(false);
+    };
+
     if (!profile) {
         return (
             <View style={styles.loading}>
@@ -49,59 +66,31 @@ const Profile: React.FC<PropsType> = ({ profile, status, updateStatus }) => {
                 </View>
                 <View style={styles.title}>
                     <Text style={styles.nameTitle}>{profile.fullName}</Text>
-                    <Status status={status} updateStatus={updateStatus} />
+                    <Status
+                        status={status}
+                        updateStatus={updateStatus}
+                        isOwner={isOwner}
+                    />
                 </View>
             </View>
-            <View>
-                <Text style={styles.about}>
-                    looking for a job: {profile.lookingForAJob ? 'Yes' : 'No'}
-                </Text>
-                <Text style={styles.about}>About me: {profile.aboutMe}</Text>
-                <View>
-                    <TouchableOpacity
-                        style={styles.toggleButton}
-                        onPress={() => toggleShowContacts(!showContacts)}
-                    >
-                        <Text style={styles.toggleButtonText}>
-                            Show contacts {`->`}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={!showContacts && { display: 'none' }}>
-                    {Object.keys(profile.contacts).map((key) => {
-                        return (
-                            <Contacts
-                                key={key}
-                                contactTitle={key}
-                                contactValue={
-                                    profile.contacts[key as keyof ContactsType]
-                                }
-                            />
-                        );
-                    })}
-                </View>
-            </View>
+            {editMode ? (
+                <ProfileDataForm
+                    profile={profile}
+                    handleSubmit={onSubmit}
+                    onCancel={onCancel}
+                />
+            ) : (
+                <ProfileData
+                    profile={profile}
+                    isOwner={isOwner}
+                    goToEditMode={() => {
+                        setEditMode(true);
+                    }}
+                />
+            )}
             {/* <View>
                 <MyPostContainer />
             </View> */}
-        </View>
-    );
-};
-
-type ContactsPropsType = {
-    contactTitle: string;
-    contactValue: string;
-};
-
-const Contacts: React.FC<ContactsPropsType> = ({
-    contactTitle,
-    contactValue,
-}) => {
-    return (
-        <View style={styles.contacts}>
-            <Text style={styles.about}>
-                {contactTitle}: {contactValue}
-            </Text>
         </View>
     );
 };

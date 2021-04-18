@@ -67,6 +67,8 @@ export const styles = StyleSheet.create({
     },
     toggleButton: {
         display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         marginRight: 'auto',
         paddingVertical: 5,
     },
@@ -76,5 +78,13 @@ export const styles = StyleSheet.create({
     },
     contacts: {
         paddingLeft: 20,
+    },
+    editButton: {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 10,
     },
 });
