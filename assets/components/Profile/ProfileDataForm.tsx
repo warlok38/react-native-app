@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
-import { icons } from '../icons';
 import { styles } from './style';
+import { Icon } from '../icons';
 
 export const ProfileDataForm: React.FC<any> = ({
     handleSubmit,
@@ -163,7 +163,6 @@ export const ProfileDataForm: React.FC<any> = ({
                         error={errors[`${key}`]}
                         /* @ts-ignore */
                         touched={touched[`${key}`]}
-                        icon={icons.Error}
                     />
                 </View>
             );
@@ -235,14 +234,7 @@ const TextInput: React.FC<any> = forwardRef(
                     />
                 </View>
                 {error && (
-                    <View
-                        style={{
-                            width: 20,
-                            height: 20,
-                        }}
-                    >
-                        {icon}
-                    </View>
+                    <Icon name="error" width={20} height={20} fill="#FF5A5F" />
                 )}
             </View>
         );

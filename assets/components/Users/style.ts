@@ -2,24 +2,21 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     wrapper: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },
     row: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 10,
     },
     buttonFriend: {
         marginLeft: 'auto',
-        height: 'auto',
     },
     userPhoto: {
         width: 60,
         height: 60,
-        borderRadius: 50,
+        borderRadius: 30,
     },
     userLabel: {
         paddingLeft: 10,

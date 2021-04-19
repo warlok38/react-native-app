@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import { ContactsType, ProfileType } from '../../types/types';
-import { icons } from '../icons';
+import { Icon } from '../icons';
 
 type typeProfileDataPropsType = {
     profile: ProfileType;
@@ -43,14 +43,21 @@ const ProfileData: React.FC<typeProfileDataPropsType> = ({
                         <Text style={styles.toggleButtonText}>
                             {showContacts ? 'Скрыть' : 'Показать'}
                         </Text>
-                        <View
-                            style={{
-                                width: 20,
-                                height: 20,
-                            }}
-                        >
-                            {showContacts ? icons.arrowUp : icons.arrowDown}
-                        </View>
+                        {showContacts ? (
+                            <Icon
+                                name="arrowUp"
+                                width={25}
+                                height={25}
+                                fill="#323232"
+                            />
+                        ) : (
+                            <Icon
+                                name="arrowDown"
+                                width={25}
+                                height={25}
+                                fill="#323232"
+                            />
+                        )}
                     </TouchableOpacity>
                 </View>
                 <View style={!showContacts && { display: 'none' }}>

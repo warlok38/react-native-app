@@ -21,9 +21,6 @@ export const stylesFooter: any = StyleSheet.create({
         // borderColor: '#797979',
         backgroundColor: '#fff',
     },
-    isActive: {
-        color: '#92c1e8',
-    },
     footerLinkLogin: {
         fontWeight: 'bold',
     },
@@ -31,5 +28,8 @@ export const stylesFooter: any = StyleSheet.create({
     text: {
         fontSize: 10,
         color: '#797979',
+    },
+    active: {
+        color: '#2186c4',
     },
 });

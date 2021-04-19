@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Entypo as Icon } from '@expo/vector-icons';
 import { login } from '../../store/auth-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../store/redux-store';
 import { Redirect } from 'react-router';
-import { icons } from '../icons';
 import { reduxForm } from 'redux-form';
+import { Entypo as EntypoIcon } from '@expo/vector-icons';
+import { Icon } from '../icons';
 
 export const Login: React.FC = () => {
     const captchaUrl = useSelector(
@@ -82,8 +82,8 @@ export const LoginForm: React.FC<any> = ({
                 paddingHorizontal: 32,
             }}
         >
-            <Text style={{ color: '#223e4b', fontSize: 20, marginBottom: 16 }}>
-                Login
+            <Text style={{ color: '#223e4b', fontSize: 24, marginBottom: 16 }}>
+                Авторизация
             </Text>
             <View
                 style={{
@@ -92,8 +92,7 @@ export const LoginForm: React.FC<any> = ({
             >
                 <TextInput
                     icon="mail"
-                    iconError={icons.Error}
-                    placeholder="Enter your email"
+                    placeholder="Введите email..."
                     autoCapitalize="none"
                     autoCompleteType="email"
                     keyboardType="email-address"
@@ -116,9 +115,8 @@ export const LoginForm: React.FC<any> = ({
             >
                 <TextInput
                     ref={password}
-                    iconError={icons.Error}
                     icon="key"
-                    placeholder="Enter your password"
+                    placeholder="Введите пароль..."
                     secureTextEntry
                     autoCompleteType="password"
                     autoCapitalize="none"
@@ -150,8 +148,7 @@ export const LoginForm: React.FC<any> = ({
                         source={{ uri: captchaUrl }}
                     />
                     <TextInput
-                        iconError={icons.Error}
-                        placeholder="Enter capthca"
+                        placeholder="Введите капчу..."
                         returnKeyType="go"
                         keyboardAppearance="dark"
                         onChangeText={handleChange('captcha')}
@@ -165,11 +162,12 @@ export const LoginForm: React.FC<any> = ({
             <View
                 style={{
                     display: 'flex',
+                    alignItems: 'center',
                     flexDirection: 'row',
-                    paddingVertical: 10,
+                    paddingVertical: 15,
                 }}
             >
-                <Text>Remember me</Text>
+                <Text>Запомнить данные</Text>
                 <Switch
                     onValueChange={() =>
                         swithChangeHandler('rememberMe', isSwitchEnabled)
@@ -182,7 +180,7 @@ export const LoginForm: React.FC<any> = ({
                     <Text style={{ color: '#FF5A5F' }}>{error}</Text>
                 </View>
             )}
-            <Button label="Login" onPress={onSubmitHandler} />
+            <Button label="Войти" onPress={onSubmitHandler} />
         </View>
     );
 };
@@ -222,7 +220,7 @@ const Button: React.FC<{ label: string; onPress: () => void }> = ({
 };
 
 const TextInput: React.FC<any> = forwardRef(
-    ({ icon, error, iconError, touched, ...otherProps }, ref) => {
+    ({ icon, error, touched, ...otherProps }, ref) => {
         const validationColor = !touched
             ? '#223e4b'
             : error
@@ -242,7 +240,7 @@ const TextInput: React.FC<any> = forwardRef(
                 }}
             >
                 <View style={{ padding: 8 }}>
-                    <Icon name={icon} color={validationColor} size={16} />
+                    <EntypoIcon name={icon} color={validationColor} size={16} />
                 </View>
                 <View style={{ flex: 1 }}>
                     <RNTextInput
@@ -253,14 +251,7 @@ const TextInput: React.FC<any> = forwardRef(
                     />
                 </View>
                 {error && (
-                    <View
-                        style={{
-                            width: 20,
-                            height: 20,
-                        }}
-                    >
-                        {iconError}
-                    </View>
+                    <Icon name="error" width={20} height={20} fill="#FF5A5F" />
                 )}
             </View>
         );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StatusBar, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StatusBar, View } from 'react-native';
 import { NativeRouter, Redirect, Route, Switch } from 'react-router-native';
 
 import Profile from './Profile';
@@ -22,6 +22,9 @@ const SuspendedProfile = withSuspense(ProfileContainer);
 const SuspendedChatPage = withSuspense(ChatPage);
 
 export const Root = () => {
+    const loading = useSelector(
+        (state: AppStateType) => state.profilePage.isFetching
+    );
     const initialized = useSelector(
         (state: AppStateType) => state.app.initialized
     );
@@ -39,6 +42,11 @@ export const Root = () => {
             <View>
                 {/* Navbar */}
                 <View style={styles.container}>
+                    {loading && (
+                        <View style={styles.loading}>
+                            <ActivityIndicator color="blue" size={50} />
+                        </View>
+                    )}
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <Switch>
                             <Route
@@ -85,5 +93,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '100%',
+    },
+    loading: {
+        zIndex: 999,
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });

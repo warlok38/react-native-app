@@ -14,6 +14,7 @@ let initialState = {
     login: null as string | null,
     isAuth: false,
     captchaUrl: null as string | null,
+    isFetching: false,
 };
 
 const authReducer = (
@@ -28,7 +29,9 @@ const authReducer = (
                 ...action.payload,
             };
         }
-
+        case 'SN/USERS/TOGGLE_IS_FETCHING': {
+            return { ...state, isFetching: action.isFetching };
+        }
         default:
             return state;
     }
@@ -50,6 +53,12 @@ export const actions = {
             type: 'SN/auth/GET_CAPTCHA_URL_SUCCESS',
             payload: { captchaUrl },
         } as const),
+    toggleIsFetching: (isFetching: boolean) => {
+        return {
+            type: 'SN/USERS/TOGGLE_IS_FETCHING',
+            isFetching,
+        } as const;
+    },
 };
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
@@ -66,6 +75,7 @@ export const login = (
     rememberMe: boolean,
     captcha: string
 ): ThunkType => async (dispatch) => {
+    dispatch(actions.toggleIsFetching(true));
     const data = await authAPI.login(email, password, rememberMe, captcha);
     if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(getAuthUserData());
@@ -81,6 +91,7 @@ export const login = (
             })
         );
     }
+    dispatch(actions.toggleIsFetching(false));
 };
 export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
     const data = await securityAPI.getCaptchaUrl();
@@ -89,10 +100,12 @@ export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
 };
 
 export const logout = (): ThunkType => async (dispatch) => {
+    dispatch(actions.toggleIsFetching(true));
     const response = await authAPI.logout();
     if (response.data.resultCode === 0) {
         dispatch(actions.setAuthUserData(null, null, null, false));
     }
+    dispatch(actions.toggleIsFetching(false));
 };
 
 export default authReducer;

@@ -10,6 +10,7 @@ const initialState = {
     ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: '',
+    isFetching: false,
 };
 
 const profileReducer = (
@@ -49,6 +50,9 @@ const profileReducer = (
                 } as ProfileType,
             };
         }
+        case 'SN/USERS/TOGGLE_IS_FETCHING': {
+            return { ...state, isFetching: action.isFetching };
+        }
         default:
             return state;
     }
@@ -80,6 +84,12 @@ export const actions = {
             type: 'SN/PROFILE/SAVE_PHOTO_SUCCESS',
             photos,
         } as const),
+    toggleIsFetching: (isFetching: boolean) => {
+        return {
+            type: 'SN/USERS/TOGGLE_IS_FETCHING',
+            isFetching,
+        } as const;
+    },
 };
 
 // САНКИ
@@ -87,8 +97,10 @@ export const actions = {
 export const getUserProfile = (userId: number): ThunkType => async (
     dispatch
 ) => {
+    dispatch(actions.toggleIsFetching(true));
     const data = await ProfileAPI.getProfile(userId);
     dispatch(actions.setUserProfile(data));
+    dispatch(actions.toggleIsFetching(false));
 };
 
 export const getStatus = (userId: number): ThunkType => async (dispatch) => {
@@ -96,6 +108,7 @@ export const getStatus = (userId: number): ThunkType => async (dispatch) => {
     dispatch(actions.setStatus(data));
 };
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
+    dispatch(actions.toggleIsFetching(true));
     try {
         const data = await ProfileAPI.updateStatus(status);
         if (data.resultCode === 0) {
@@ -105,17 +118,21 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         //error handler
         console.log('error: updateStatus was failed');
     }
+    dispatch(actions.toggleIsFetching(false));
 };
 export const savePhoto = (file: File): ThunkType => async (dispatch) => {
+    dispatch(actions.toggleIsFetching(true));
     const data = await ProfileAPI.savePhoto(file);
     if (data.resultCode === 0) {
         dispatch(actions.savePhotoSuccess(data.data.photos));
     }
+    dispatch(actions.toggleIsFetching(false));
 };
 export const saveProfile = (profile: ProfileType): ThunkType => async (
     dispatch,
     getState
 ) => {
+    dispatch(actions.toggleIsFetching(true));
     const userId = getState().auth.userId;
     const data = await ProfileAPI.saveProfile(profile);
 
@@ -127,9 +144,11 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (
         }
     } else {
         dispatch(stopSubmit('edit-profile', { _error: data.messages[0] }));
+        dispatch(actions.toggleIsFetching(false));
         // dispatch(stopSubmit("edit-profile", {"contacts": {"facebook": response.data.messages[0]} }))
         return Promise.reject(data.messages[0]);
     }
+    dispatch(actions.toggleIsFetching(false));
 };
 
 export default profileReducer;

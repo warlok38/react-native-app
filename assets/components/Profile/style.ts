@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     loading: {
         zIndex: 999,
         position: 'absolute',
-        marginVertical: '50%',
+        marginVertical: '25%',
         marginHorizontal: '50%',
         alignItems: 'center',
         justifyContent: 'center',

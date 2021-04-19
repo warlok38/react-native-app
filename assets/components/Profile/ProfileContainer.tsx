@@ -57,22 +57,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
-        return !this.props.profile ? (
-            <View
-                style={{
-                    marginVertical: '50%',
-                    marginHorizontal: '50%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <ActivityIndicator
-                    color="white"
-                    size={50}
-                    style={{ zIndex: 999 }}
-                />
-            </View>
-        ) : (
+        return (
             <Profile
                 {...this.props}
                 isOwner={!this.props.match.params.userId}

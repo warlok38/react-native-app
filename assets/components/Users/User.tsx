@@ -4,7 +4,7 @@ import { styles } from './style';
 import { Link } from 'react-router-native';
 import { UserType } from '../../types/types';
 import { Button, Image, Text, View, TouchableOpacity } from 'react-native';
-import { icons } from '../icons';
+import { Icon } from '../icons';
 
 type PropsType = {
     user: UserType;
@@ -36,7 +36,9 @@ const User: React.FC<PropsType> = ({
                 </View>
                 <View style={styles.userLabel}>
                     <Text style={styles.userName}>{user.name}</Text>
-                    <Text style={styles.userStatus}>{user.status}</Text>
+                    {user.status && (
+                        <Text style={styles.userStatus}>{user.status}</Text>
+                    )}
                 </View>
             </View>
             <View style={styles.buttonFriend}>
@@ -52,9 +54,12 @@ const User: React.FC<PropsType> = ({
                             unfollow(user.id);
                         }}
                     >
-                        <View style={{ width: 30, height: 30 }}>
-                            {icons.userRemove}
-                        </View>
+                        <Icon
+                            name="userRemove"
+                            width={30}
+                            height={30}
+                            fill="#323232"
+                        />
                     </TouchableOpacity>
                 ) : (
                     <TouchableOpacity
@@ -68,9 +73,12 @@ const User: React.FC<PropsType> = ({
                             follow(user.id);
                         }}
                     >
-                        <View style={{ width: 30, height: 30 }}>
-                            {icons.userAdd}
-                        </View>
+                        <Icon
+                            name="userAdd"
+                            width={30}
+                            height={30}
+                            fill="#323232"
+                        />
                     </TouchableOpacity>
                 )}
             </View>

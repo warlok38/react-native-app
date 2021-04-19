@@ -50,7 +50,7 @@ export const Users: React.FC<Props> = ({ loading }) => {
 
     return (
         <View>
-            {loading && (
+            {/* {loading && (
                 <View style={styles.loading}>
                     <ActivityIndicator
                         color="white"
@@ -58,7 +58,7 @@ export const Users: React.FC<Props> = ({ loading }) => {
                         style={{ zIndex: 999 }}
                     />
                 </View>
-            )}
+            )} */}
             {/* <UsersSearchForm onFilterChanged={onFilterChanged} /> */}
             <Paginator
                 currentPage={currentPage}
