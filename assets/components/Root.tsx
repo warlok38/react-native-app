@@ -44,7 +44,7 @@ export const Root = () => {
                 <View style={styles.container}>
                     {loading && (
                         <View style={styles.loading}>
-                            <ActivityIndicator color="blue" size={50} />
+                            <ActivityIndicator color="#2186c4" size={50} />
                         </View>
                     )}
                     <ScrollView showsVerticalScrollIndicator={false}>

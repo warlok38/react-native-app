@@ -10,6 +10,7 @@ import {
     selectIsAuth,
 } from '../../store/auth-selectors';
 import { Icon } from '../icons';
+import * as S from './styled';
 
 const FooterBar = () => {
     const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const FooterBar = () => {
     };
 
     return (
-        <View style={stylesFooter.footerContainer}>
+        <S.Wrapper style={stylesFooter.footerContainer}>
             <Link to="/profile" style={stylesFooter.footerLink}>
                 <View style={stylesFooter.linkContainer}>
                     <Icon
@@ -165,7 +166,7 @@ const FooterBar = () => {
                     </View>
                 </Link>
             )}
-        </View>
+        </S.Wrapper>
     );
 };
 

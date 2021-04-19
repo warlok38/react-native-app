@@ -2,23 +2,22 @@ import { StyleSheet } from 'react-native';
 
 export const stylesFooter: any = StyleSheet.create({
     footerContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        height: 40,
-        backgroundColor: '#eeeeee',
-    },
-    linkContainer: {
-        display: 'flex',
-        alignItems: 'center',
+        elevation: 1,
     },
     footerLink: {
         display: 'flex',
         alignItems: 'center',
         flex: 1,
-        paddingVertical: 5,
         // borderLeftWidth: 1,
         // borderRightWidth: 1,
         // borderColor: '#797979',
+        backgroundColor: '#fff',
+    },
+    linkContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        paddingVertical: 5,
+        width: '100%',
         backgroundColor: '#fff',
     },
     footerLinkLogin: {
